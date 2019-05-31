@@ -1,0 +1,39 @@
+{
+    "name": "libero/media-type",
+    "description": "Media Type",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Libero\\MediaType\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\Libero\\MediaType\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "daverandom/exceptional-json": "^1.0",
+        "libero/coding-standard": "^0.5",
+        "phpstan/phpstan": "^0.11",
+        "phpstan/phpstan-phpunit": "^0.11",
+        "phpunit/phpunit": "^8.1",
+        "symfony/filesystem": "^4.3",
+        "symfony/finder": "^4.3"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

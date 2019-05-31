@@ -1,0 +1,48 @@
+language: php
+
+php:
+    - 7.2
+    - 7.3
+
+before_install:
+    - phpenv config-rm xdebug.ini || true
+
+install:
+    - travis_retry composer install --classmap-authoritative --no-suggest --prefer-dist
+
+script:
+    - vendor/bin/phpunit
+
+jobs:
+    include:
+
+        - stage: Test
+          name: Lowest dependency versions
+          php: 7.2
+          install:
+              - travis_retry composer update --classmap-authoritative --no-suggest  --prefer-dist --prefer-lowest --prefer-stable
+
+        - stage: Code Quality
+          name: Coding standards
+          script:
+              - vendor/bin/phpcs -p
+
+        - stage: Code Quality
+          name: Static analysis
+          script:
+              - vendor/bin/phpstan analyse
+
+stages:
+    - Test
+    - name: Code Quality
+      if: type = pull_request
+
+cache:
+    directories:
+        - $HOME/.composer/cache/files
+
+if: |
+    branch = master OR \
+    branch =~ /^(?:[0-9]|[1-9][0-9]*)\.(?:[0-9]|[1-9][0-9]*)$/ OR \
+    tag IS present OR \
+    type = pull_request
